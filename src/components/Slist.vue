@@ -2,26 +2,46 @@
   <div class="Slist">
     <ListenKeyStroke @setItem="setTimeStamp" />
     <h1>Press A or B</h1>
-      <SlickList lockAxis="y" v-model="items" class="list">
-        <SlickItem v-for="(item, index) in items" :index="index" :key="index" class="list-item">
-          <span class="strA">{{ item.keyA }}</span>
-          <span class="strB">{{ item.keyB }}</span>
-          <span class="rmBtn"><button @click="removeItem(index)">Remove</button></span>
-          <div class="clear"></div>
-        </SlickItem>
-      </SlickList>
+
+      <div class="slickSortBox">
+        <h2>SlickSort</h2>
+        <SlickList lockAxis="y" v-model="items" class="list">
+          <SlickItem v-for="(item, index) in items" :index="index" :key="index" class="list-item">
+            <i class="fa fa-align-justify handle"></i>
+            <span class="strA">{{ item.keyA }}</span>
+            <span class="strB">{{ item.keyB }}</span>
+            <span class="rmBtn"><button @click="removeItem(index)">Remove</button></span>
+            <div class="clear"></div>
+          </SlickItem>
+        </SlickList>
+      </div>
+      <div class="draggableBox">
+        <h2>Vue Draggable</h2>
+        <draggable tag="ul" :list="items" class="list-group list" handle=".handle">
+          <li class="list-group-item list-item" v-for="(element, idx) in items" :key="idx">
+            <i class="fa fa-align-justify handle"></i>
+            <span class="strA">{{ element.keyA }} </span>
+            <span class="strB">{{ element.keyB }} </span>
+            <span class="rmBtn"><button @click="removeItem(idx)">Remove</button></span>
+            <div class="clear"></div>
+          </li>
+        </draggable>
+      </div>
+      
   </div>
 </template>
 
 <script>
 import { SlickList, SlickItem } from 'vue-slicksort';
 import ListenKeyStroke from './ListenKeyStroke'
+import draggable from 'vuedraggable'
 export default {
   name: 'Slist',
   components: {
     SlickItem,
     SlickList,
-    ListenKeyStroke
+    ListenKeyStroke,
+    draggable
   },
   data() {
     return {
@@ -103,10 +123,19 @@ body {
   border-radius: 4px;
   border: 1px solid #EEE;
   transition: all 0.2s;
-  width: 40%;
+  width: 80%;
   margin: 0 auto;
 }
 
+.slickSortBox {
+  float: left;
+    width: 49%;
+    border-right: 1px solid #000;
+}
+.draggableBox {
+  float: right;
+  width: 50%;
+}
 .list-item {
   padding: 10px;
   list-style-type: none;
@@ -148,5 +177,28 @@ body {
 h2 {
   font-weight: bold;
   margin-bottom: 15px;
+}
+.list-group {
+  list-style-type: none;
+  padding: 0;
+}
+.button {
+  margin-top: 35px;
+}
+.handle {
+  float: left;
+  padding-top: 8px;
+  padding-bottom: 8px;
+    cursor: grabbing;
+    padding-right: 5px;
+}
+.close {
+  float: right;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+input {
+  display: inline-block;
+  width: 50%;
 }
 </style>

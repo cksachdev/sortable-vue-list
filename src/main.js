@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import VueMousetrap from 'vue-mousetrap'
+
 Vue.use(VueMousetrap)
 
 Vue.config.productionTip = false
